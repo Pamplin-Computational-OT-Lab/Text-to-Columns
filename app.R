@@ -100,7 +100,7 @@ extract_data_from_pdf <- function(pdf_path, search_terms, n) {
 # 3) Shiny UI
 # ------------------------------------------------------------------------------
 ui <- fluidPage(
-  titlePanel("Zotero Collection Search Tool"),
+  titlePanel("Pamplin COTL: Text-To-Columns"),
   
   sidebarLayout(
     sidebarPanel(
