@@ -1,4 +1,8 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM,pipeline  # Add this import
+import os
+
+
+os.environ['HF_HUB_DISABLE_SYMLINKS_WARNING'] = '1'
 
 # Load GPT-2 model and tokenizer
 tokenizer_gpt2 = AutoTokenizer.from_pretrained("gpt2")
@@ -54,6 +58,41 @@ def qa_with_gpt2(conversation, max_tokens=300, temperature=0.7):
     except Exception as e:
         conversation.append({"role": "assistant", "content": f"Error: {str(e)}"})
         return conversation
+
+# ----------------------------- Classification Function -----------------------------
+
+
+# Load zero-shot classification model
+pipe = pipeline("zero-shot-classification", model="valhalla/distilbart-mnli-12-1")
+
+def classify_text(text_list, prompt, terms):
+    """
+    Classify texts using zero-shot classification.
+
+    Args:
+        text_list (list): List of texts to classify.
+        prompt (str): Instruction prompt for context (not used directly but can guide preprocessing).
+        terms (list): List of classification labels.
+
+    Returns:
+        list: List of classification results.
+    """
+    classifications = []
+
+    for text in text_list:
+        try:
+            # Perform zero-shot classification
+            result = pipe(text, candidate_labels=terms)
+            
+            # Get the label with the highest score
+            classification = result['labels'][0]
+            classifications.append(classification)
+        except Exception as e:
+            classifications.append(f"Error: {str(e)}")
+
+    return classifications
+
+
       
       
 
