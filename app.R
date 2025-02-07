@@ -100,7 +100,7 @@ extract_data_from_pdf <- function(pdf_path, search_terms, n) {
 # 3) Shiny UI
 # ------------------------------------------------------------------------------
 ui <- fluidPage(
-  titlePanel("Pamplin COTL: Text-To-Columns"),
+  titlePanel("Pamplin COT Lab: Text-To-Columns"),
   
   sidebarLayout(
     sidebarPanel(
